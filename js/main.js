@@ -107,13 +107,8 @@ var renderPin = function (element) {
 
 renderPin(elements);
 
-var renderFeatures = function (items, template) {
-  var containerFeatures = template.querySelector('.popup__features');
-  var featureItem = containerFeatures.querySelectorAll('.popup__feature');
-
-  for (var a = 0; a < featureItem.length; a++) {
-    containerFeatures.removeChild(featureItem[a]);
-  }
+var renderFeatures = function (items, container) {
+  container.innerHTML = '';
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < items.length; i++) {
@@ -121,14 +116,12 @@ var renderFeatures = function (items, template) {
     element.className = 'popup__feature popup__feature--' + items[i];
     fragment.appendChild(element);
   }
-  containerFeatures.appendChild(fragment);
+  container.appendChild(fragment);
 };
 
-var renderPhotos = function (items, template) {
-
-  var containerPhotos = template.querySelector('.popup__photos');
-  var photoItem = template.querySelector('.popup__photo');
-  containerPhotos.removeChild(photoItem);
+var renderPhotos = function (items, container) {
+  var photoItem = container.querySelector('.popup__photo');
+  container.innerHTML = '';
   var fragment = document.createDocumentFragment();
 
   for (var a = 0; a < items.length; a++) {
@@ -137,21 +130,23 @@ var renderPhotos = function (items, template) {
     fragment.appendChild(photo);
   }
 
-  containerPhotos.appendChild(fragment);
+  container.appendChild(fragment);
 };
 
-var renderCard = function (poolElements) {
+var renderCard = function (element) {
   var card = mapCard.cloneNode(true);
+  var popupFeatures = card.querySelector('.popup__features');
+  var popupPhotos = card.querySelector('.popup__photos');
 
-  card.querySelector('.popup__title').textContent = poolElements.offer.title;
-  card.querySelector('.popup__text--address').textContent = poolElements.offer.address;
-  card.querySelector('.popup__text--price').textContent = poolElements.offer.price + 'Р/ночь';
-  card.querySelector('.popup__type').textContent = TYPES_OF_HOUSING[poolElements.offer.type];
-  card.querySelector('.popup__text--capacity').textContent = poolElements.offer.rooms + ' комнаты для ' + poolElements.offer.guests + ' гостей';
-  card.querySelector('.popup__text--time').textContent = 'Заезд после ' + poolElements.offer.checkin + ',' + ' выезд до ' + poolElements.offer.checkout;
-  renderFeatures(poolElements.offer.features, card);
-  card.querySelector('.popup__description').textContent = poolElements.offer.description;
-  renderPhotos(poolElements.offer.photos, card);
+  card.querySelector('.popup__title').textContent = element.offer.title;
+  card.querySelector('.popup__text--address').textContent = element.offer.address;
+  card.querySelector('.popup__text--price').textContent = element.offer.price + ' ₽/ночь';
+  card.querySelector('.popup__type').textContent = TYPES_OF_HOUSING[element.offer.type];
+  card.querySelector('.popup__text--capacity').textContent = element.offer.rooms + ' комнаты для ' + element.offer.guests + ' гостей';
+  card.querySelector('.popup__text--time').textContent = 'Заезд после ' + element.offer.checkin + ',' + ' выезд до ' + element.offer.checkout;
+  renderFeatures(element.offer.features, popupFeatures);
+  card.querySelector('.popup__description').textContent = element.offer.description;
+  renderPhotos(element.offer.photos, popupPhotos);
 
   map.insertBefore(card, mapFilter);
 };
