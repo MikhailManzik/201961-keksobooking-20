@@ -23,6 +23,10 @@ var TYPES_OF_HOUSING = {
   house: 'Дом',
   bungalo: 'Бунгало'
 };
+var mapFilters = document.querySelector('.map__filters');
+var mapFiltersSelects = mapFilters.querySelectorAll('select');
+var mapFeatures = mapFilters.querySelector('fieldset');
+var mainPinButton = document.querySelector('.map__pin--main');
 
 var getRandomNumber = function (num) {
   return Math.floor(Math.random() * num);
@@ -83,8 +87,6 @@ var getPoolElements = function (avatars, titles, types, time, options, images) {
 
 var elements = getPoolElements(LIST_AVATARS, LIST_TITLES, LIST_TYPES, LIST_TIME, LIST_FEATURES, LIST_PHOTOS);
 
-map.classList.remove('map--faded');
-
 var createPin = function (value) {
   var pin = mapPin.cloneNode(true);
   var pinImage = pin.querySelector('img');
@@ -104,8 +106,6 @@ var renderPin = function (element) {
   }
   mapPins.appendChild(fragment);
 };
-
-renderPin(elements);
 
 var renderFeatures = function (items, container) {
   container.innerHTML = '';
@@ -151,4 +151,24 @@ var renderCard = function (element) {
   map.insertBefore(card, mapFilter);
 };
 
-renderCard(elements[0]);
+// renderCard(elements[0]);
+
+var disableElements = function () {
+  for (var i = 0; i < mapFiltersSelects.length; i++) {
+    mapFiltersSelects[i].disabled = true;
+  }
+  mapFeatures.disabled = true;
+};
+
+var onShowContent = function (evt) {
+  if (evt.button === 0 || evt.key === 'Enter') {
+    map.classList.remove('map--faded');
+    evt.preventDefault(disableElements);
+    renderPin(elements);
+  }
+};
+
+mainPinButton.addEventListener('mousedown', onShowContent);
+mainPinButton.addEventListener('keydown', onShowContent);
+
+
