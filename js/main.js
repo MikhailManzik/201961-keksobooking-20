@@ -27,6 +27,21 @@ var mapFilters = document.querySelector('.map__filters');
 var mapFiltersSelects = mapFilters.querySelectorAll('select');
 var mapFeatures = mapFilters.querySelector('fieldset');
 var mainPinButton = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+var adFormFieldsets = adForm.querySelectorAll('fieldset');
+var MAIN_PIN_WIDTH = 65;
+var MAIN_PIN_HEIGHT = 65;
+var MAIN_PIN_POSITION_X = mainPinButton.offsetLeft + Math.round(MAIN_PIN_WIDTH / 2);
+var MAIN_PIN_POSITION_Y = mainPinButton.offsetTop + MAIN_PIN_HEIGHT;
+var addressInput = document.querySelector('#address');
+var roomNumberSelect = document.querySelector('#room_number');
+var capacitySelect = document.querySelector('#capacity');
+var ROOM_CAPACITY = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0]
+};
 
 var getRandomNumber = function (num) {
   return Math.floor(Math.random() * num);
@@ -153,22 +168,41 @@ var renderCard = function (element) {
 
 // renderCard(elements[0]);
 
-var disableElements = function () {
+var disableElements = function (value) {
   for (var i = 0; i < mapFiltersSelects.length; i++) {
-    mapFiltersSelects[i].disabled = true;
+    mapFiltersSelects[i].disabled = value;
   }
-  mapFeatures.disabled = true;
+  for (var a = 0; a < adFormFieldsets.length; a++) {
+    adFormFieldsets[a].disabled = value;
+  }
+  mapFeatures.disabled = value;
 };
+
+disableElements(true);
 
 var onShowContent = function (evt) {
   if (evt.button === 0 || evt.key === 'Enter') {
     map.classList.remove('map--faded');
-    evt.preventDefault(disableElements);
+    adForm.classList.remove('ad-form--disabled');
+    disableElements(false);
     renderPin(elements);
+    validationRoomsAndGuests();
   }
+  mainPinButton.removeEventListener('mousedown', onShowContent);
+  mainPinButton.removeEventListener('keydown', onShowContent);
 };
+
+addressInput.value = MAIN_PIN_POSITION_X + ', ' + MAIN_PIN_POSITION_Y;
 
 mainPinButton.addEventListener('mousedown', onShowContent);
 mainPinButton.addEventListener('keydown', onShowContent);
 
+var validationRoomsAndGuests = function () {
+  var roomNumber = roomNumberSelect.value;
+  var capacityNumber = parseInt(capacitySelect.value, 10);
+  capacitySelect.setCustomValidity(ROOM_CAPACITY[roomNumber].includes(capacityNumber) ? '' : 'Количество гостей больше чем комнат');
+};
+
+roomNumberSelect.addEventListener('change', validationRoomsAndGuests);
+capacitySelect.addEventListener('change', validationRoomsAndGuests);
 
