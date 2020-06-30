@@ -203,20 +203,25 @@ var activeMap = function () {
   getAddressOfMainPin(true);
   validationRoomsAndGuests();
 
-  mainPinButton.removeEventListener('mousedown', onShowContent);
-  mainPinButton.removeEventListener('keydown', onShowContent);
+  mainPinButton.removeEventListener('mousedown', onMainPinClick);
+  mainPinButton.removeEventListener('keydown', onMainPinEnterPress);
+
 };
 
-var onShowContent = function (evt) {
+var onMainPinClick = function (evt) {
   if (evt.button === LEFT_MOUSE_BUTTON) {
-    activeMap();
-  } else if (evt.key === ENTER_KEY) {
     activeMap();
   }
 };
 
-mainPinButton.addEventListener('mousedown', onShowContent);
-mainPinButton.addEventListener('keydown', onShowContent);
+var onMainPinEnterPress = function (evt) {
+  if (evt.key === ENTER_KEY) {
+    activeMap();
+  }
+};
+
+mainPinButton.addEventListener('mousedown', onMainPinClick);
+mainPinButton.addEventListener('keydown', onMainPinEnterPress);
 
 var validationRoomsAndGuests = function () {
   var roomNumber = roomNumberSelect.value;
