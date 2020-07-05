@@ -44,6 +44,7 @@ var ROOM_CAPACITY = {
 var SYSTEM_OF_NUMERATION = 10;
 var LEFT_MOUSE_BUTTON = 0;
 var ENTER_KEY = 'Enter';
+var ESC_KEY_CODE = 'Escape';
 var titleFormOffer = document.querySelector('#title');
 var priceFormOffer = document.querySelector('#price');
 var typeFormHousingOffer = document.querySelector('#type');
@@ -180,6 +181,7 @@ var renderCard = function (element) {
   map.insertBefore(card, mapFilter);
 
   popupClose.addEventListener('click', closePopup);
+  document.addEventListener('keydown', onPinEscPress);
 };
 
 var disableElements = function (value) {
@@ -264,6 +266,12 @@ function closePopup() {
   }
 }
 
+var onPinEscPress = function (evt) {
+  if (evt.key === ESC_KEY_CODE) {
+    closePopup();
+  }
+};
+
 titleFormOffer.addEventListener('invalid', function () {
   if (titleFormOffer.validity.tooShort) {
     titleFormOffer.setCustomValidity('Заголовок должен состоять минимум из 30 символов');
@@ -281,19 +289,19 @@ var getPriceFormOffer = function (evt) {
   switch (value) {
     case 'flat':
       priceFormOffer.min = 1000;
-      priceFormOffer.value = 1000;
+      priceFormOffer.placeholder = 1000;
       break;
     case 'bungalo':
       priceFormOffer.min = 0;
-      priceFormOffer.value = 0;
+      priceFormOffer.placeholder = 0;
       break;
     case 'house':
       priceFormOffer.min = 5000;
-      priceFormOffer.value = 5000;
+      priceFormOffer.placeholder = 5000;
       break;
     case 'palace':
       priceFormOffer.min = 10000;
-      priceFormOffer.value = 10000;
+      priceFormOffer.placeholder = 10000;
       break;
   }
 };
