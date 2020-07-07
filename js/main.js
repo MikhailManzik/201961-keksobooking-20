@@ -113,23 +113,28 @@ var getPoolElements = function (avatars, titles, types, time, options, images) {
   return newArray;
 };
 
-var elements = getPoolElements(LIST_AVATARS, LIST_TITLES, LIST_TYPES, LIST_TIME, LIST_FEATURES, LIST_PHOTOS);
+var objects = getPoolElements(LIST_AVATARS, LIST_TITLES, LIST_TYPES, LIST_TIME, LIST_FEATURES, LIST_PHOTOS);
 
-var createPin = function (value) {
+var renderPin = function (offer) {
   var pin = mapPin.cloneNode(true);
   var pinImage = pin.querySelector('img');
-  pin.style.left = value.location.x - PIN_WIDTH / 2 + 'px';
-  pin.style.top = value.location.y - PIN_HEIGHT + 'px';
-  pinImage.src = value.author.avatar;
-  pinImage.alt = value.offer.title;
+  pin.style.left = offer.location.x - PIN_WIDTH / 2 + 'px';
+  pin.style.top = offer.location.y - PIN_HEIGHT + 'px';
+  pinImage.src = offer.author.avatar;
+  pinImage.alt = offer.offer.title;
+
+  pin.addEventListener('click', function () {
+    renderCard(offer);
+    pin.classList.add('map__pin--active');
+  });
   return pin;
 };
 
-var renderPin = function (element) {
+var renderPins = function (offers) {
   var fragment = document.createDocumentFragment();
 
-  element.forEach(function (item) {
-    fragment.appendChild(createPin(item));
+  offers.forEach(function (offer) {
+    fragment.appendChild(renderPin(offer));
   });
 
   mapPins.appendChild(fragment);
@@ -162,12 +167,12 @@ var renderPhotos = function (items, container) {
 };
 
 var renderCard = function (element) {
-  closePopup();
   var card = mapCard.cloneNode(true);
   var popupFeatures = card.querySelector('.popup__features');
   var popupPhotos = card.querySelector('.popup__photos');
   var popupClose = card.querySelector('.popup__close');
 
+  card.querySelector('.popup__avatar').src = element.author.avatar;
   card.querySelector('.popup__title').textContent = element.offer.title;
   card.querySelector('.popup__text--address').textContent = element.offer.address;
   card.querySelector('.popup__text--price').textContent = element.offer.price + ' ₽/ночь';
@@ -211,8 +216,7 @@ var activeMap = function () {
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
   disableElements(false);
-  renderPin(elements);
-  activeCards();
+  renderPins(objects);
   getAddressOfMainPin(true);
   validationRoomsAndGuests();
 
@@ -245,26 +249,15 @@ var validationRoomsAndGuests = function () {
 roomNumberSelect.addEventListener('change', validationRoomsAndGuests);
 capacitySelect.addEventListener('change', validationRoomsAndGuests);
 
-var onActiveCardClick = function (evt) {
-  if (evt.currentTarget.matches('.map__pin:not(.map__pin--main)')) {
-    renderCard(elements[0]);
-  }
-};
-
-var activeCards = function () {
-  var pinAll = document.querySelectorAll('.map__pin');
-
-  pinAll.forEach(function (item) {
-    item.addEventListener('click', onActiveCardClick);
-  });
-};
-
-function closePopup() {
+var closePopup = function () {
   var popup = document.querySelector('.popup');
+  var pin = mapPins.querySelector('.map__pin--active');
+  pin.classList.remove('map__pin--active');
   if (popup) {
     popup.remove();
   }
-}
+  document.removeEventListener('keydown', onPinEscPress);
+};
 
 var onPinEscPress = function (evt) {
   if (evt.key === ESC_KEY_CODE) {
@@ -321,18 +314,15 @@ priceFormOffer.addEventListener('invalid', function () {
   }
 });
 
-
-timeInFormOffer.addEventListener('change', function () {
-  if (timeInFormOffer.value !== timeOutFormOffer.value) {
-    timeOutFormOffer.value = timeInFormOffer.value;
+var validateArrivalAndDepartureTimes = function (sourceElement, targetElement) {
+  if (sourceElement.value !== targetElement.value) {
+    targetElement.value = sourceElement.value;
   }
-});
+};
 
-timeOutFormOffer.addEventListener('change', function () {
-  if (timeOutFormOffer.value !== timeInFormOffer.value) {
-    timeInFormOffer.value = timeOutFormOffer.value;
-  }
-});
+var onTimeChange = validateArrivalAndDepartureTimes;
+timeInFormOffer.addEventListener('change', onTimeChange.bind(null, timeInFormOffer, timeOutFormOffer));
+timeOutFormOffer.addEventListener('change', onTimeChange.bind(null, timeOutFormOffer, timeInFormOffer));
 
 var addPicture = function (fileChooser, isPreview, preview) {
   var file = fileChooser.files[0];
