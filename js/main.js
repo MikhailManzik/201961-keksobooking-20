@@ -314,13 +314,12 @@ priceFormOffer.addEventListener('invalid', function () {
   }
 });
 
-var validateArrivalAndDepartureTimes = function (sourceElement, targetElement) {
+var onTimeChange = function (sourceElement, targetElement) {
   if (sourceElement.value !== targetElement.value) {
     targetElement.value = sourceElement.value;
   }
 };
 
-var onTimeChange = validateArrivalAndDepartureTimes;
 timeInFormOffer.addEventListener('change', onTimeChange.bind(null, timeInFormOffer, timeOutFormOffer));
 timeOutFormOffer.addEventListener('change', onTimeChange.bind(null, timeOutFormOffer, timeInFormOffer));
 
