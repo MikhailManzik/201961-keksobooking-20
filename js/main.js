@@ -124,9 +124,15 @@ var renderPin = function (offer) {
   pinImage.alt = offer.offer.title;
 
   pin.addEventListener('click', function () {
+    var popup = document.querySelector('.popup');
+
+    if (popup) {
+      popup.remove();
+    }
     renderCard(offer);
     pin.classList.add('map__pin--active');
   });
+
   return pin;
 };
 
