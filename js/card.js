@@ -59,8 +59,10 @@
 
     map.insertBefore(card, mapFilter);
 
-    popupClose.addEventListener('click', closePopup);
-    document.addEventListener('keydown', onPinEscPress);
+    popupClose.addEventListener('click', function () {
+      closePopup();
+    });
+    document.addEventListener('keydown', onEscPress);
   };
 
   var closePopup = function () {
@@ -70,10 +72,10 @@
     if (popup) {
       popup.remove();
     }
-    document.removeEventListener('keydown', onPinEscPress);
+    document.removeEventListener('keydown', onEscPress);
   };
 
-  var onPinEscPress = function (evt) {
+  var onEscPress = function (evt) {
     if (evt.key === ESC_KEY_CODE) {
       closePopup();
     }

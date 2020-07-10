@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var POOL_OBJECTS = 8;
   var LIST_AVATARS = ['img/avatars/user01.png', 'img/avatars/user02.png', 'img/avatars/user03.png', 'img/avatars/user04.png', 'img/avatars/user05.png', 'img/avatars/user06.png', 'img/avatars/user07.png', 'img/avatars/user08.png'];
   var LIST_TITLES = ['Большой дом', 'Хостел', 'Кробка из под телевизора', 'Просторная крвартира', 'Шалаш', 'Бунгало', 'Квартира студия', 'Комната'];
   var LIST_TYPES = ['palace', 'flat', 'house', 'bungalo'];
@@ -29,10 +28,10 @@
     return newArray;
   };
 
-  var getPoolObjects = function (avatars, titles, types, time, options, images) {
+  var getData = function (amount) {
     var newArray = [];
 
-    for (var i = 0; i < POOL_OBJECTS; i++) {
+    for (var i = 0; i < amount; i++) {
 
       var locationX = getRandomNumber(mapBlockWidth);
       var locationY = getRandomRangeValue(130, 630);
@@ -40,21 +39,21 @@
       var item = {
 
         author: {
-          avatar: avatars[i],
+          avatar: LIST_AVATARS[i],
         },
 
         offer: {
-          title: titles[i],
+          title: LIST_TITLES[i],
           address: locationX + ', ' + locationY,
           price: getRandomNumber(10000),
-          type: getRandomValueArray(types),
+          type: getRandomValueArray(LIST_TYPES),
           rooms: getRandomRangeValue(1, 6),
           guests: getRandomRangeValue(1, 10),
-          checkin: getRandomValueArray(time),
-          checkout: getRandomValueArray(time),
-          features: getArrayRandomLength(options),
+          checkin: getRandomValueArray(LIST_TIME),
+          checkout: getRandomValueArray(LIST_TIME),
+          features: getArrayRandomLength(LIST_FEATURES),
           description: 'Строка с описанием',
-          photos: getArrayRandomLength(images),
+          photos: getArrayRandomLength(LIST_PHOTOS),
         },
 
         location: {
@@ -68,10 +67,9 @@
     return newArray;
   };
 
-  var ArraysObjects = getPoolObjects(LIST_AVATARS, LIST_TITLES, LIST_TYPES, LIST_TIME, LIST_FEATURES, LIST_PHOTOS);
-
   window.data = {
-    objects: ArraysObjects,
+    getData: getData,
   };
+
 })();
 

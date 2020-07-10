@@ -21,14 +21,11 @@
   var inputImages = document.querySelector('#images');
   var imgApartament = document.querySelector('.ad-form__photo');
 
-  var validationRoomsAndGuests = function () {
+  var validateRoomsAndGuests = function () {
     var roomNumber = roomNumberSelect.value;
     var capacityNumber = parseInt(capacitySelect.value, SYSTEM_OF_NUMERATION);
     capacitySelect.setCustomValidity(ROOM_CAPACITY[roomNumber].includes(capacityNumber) ? '' : 'Количество гостей больше чем комнат');
   };
-
-  roomNumberSelect.addEventListener('change', validationRoomsAndGuests);
-  capacitySelect.addEventListener('change', validationRoomsAndGuests);
 
   titleFormOffer.addEventListener('invalid', function () {
     if (titleFormOffer.validity.tooShort) {
@@ -42,7 +39,7 @@
     }
   });
 
-  var getPriceFormOffer = function (evt) {
+  var onPriceChange = function (evt) {
     var value = evt.target.value;
     switch (value) {
       case 'flat':
@@ -64,8 +61,6 @@
     }
   };
 
-  typeFormHousingOffer.addEventListener('change', getPriceFormOffer);
-
   priceFormOffer.addEventListener('invalid', function () {
     if (priceFormOffer.validity.rangeUnderflow) {
       priceFormOffer.setCustomValidity('Жилье не может стоить меньше 1000 рублей');
@@ -83,9 +78,6 @@
       targetElement.value = sourceElement.value;
     }
   };
-
-  timeInFormOffer.addEventListener('change', onTimeChange.bind(null, timeInFormOffer, timeOutFormOffer));
-  timeOutFormOffer.addEventListener('change', onTimeChange.bind(null, timeOutFormOffer, timeInFormOffer));
 
   var addPicture = function (fileChooser, isPreview, preview) {
     var file = fileChooser.files[0];
@@ -118,6 +110,20 @@
     }
   };
 
+  roomNumberSelect.addEventListener('change', function () {
+    validateRoomsAndGuests();
+  });
+  capacitySelect.addEventListener('change', function () {
+    validateRoomsAndGuests();
+  });
+
+  // validateRoomsAndGuests();
+
+  typeFormHousingOffer.addEventListener('change', onPriceChange);
+
+  timeInFormOffer.addEventListener('change', onTimeChange.bind(null, timeInFormOffer, timeOutFormOffer));
+  timeOutFormOffer.addEventListener('change', onTimeChange.bind(null, timeOutFormOffer, timeInFormOffer));
+
   inputAvatar.addEventListener('change', function () {
     addPicture(inputAvatar, true, imgAvatar);
   });
@@ -127,7 +133,7 @@
   });
 
   window.form = {
-    validationRoomsAndGuests: validationRoomsAndGuests,
+    validateRoomsAndGuests: validateRoomsAndGuests,
   };
 
 })();
