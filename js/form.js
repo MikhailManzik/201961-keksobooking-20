@@ -42,13 +42,13 @@
   var onPriceChange = function (evt) {
     var value = evt.target.value;
     switch (value) {
-      case 'flat':
-        priceFormOffer.min = 1000;
-        priceFormOffer.placeholder = 1000;
-        break;
       case 'bungalo':
         priceFormOffer.min = 0;
         priceFormOffer.placeholder = 0;
+        break;
+      case 'flat':
+        priceFormOffer.min = 1000;
+        priceFormOffer.placeholder = 1000;
         break;
       case 'house':
         priceFormOffer.min = 5000;
@@ -110,14 +110,14 @@
     }
   };
 
+  validateRoomsAndGuests();
+
   roomNumberSelect.addEventListener('change', function () {
     validateRoomsAndGuests();
   });
   capacitySelect.addEventListener('change', function () {
     validateRoomsAndGuests();
   });
-
-  // validateRoomsAndGuests();
 
   typeFormHousingOffer.addEventListener('change', onPriceChange);
 

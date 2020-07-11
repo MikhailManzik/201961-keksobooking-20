@@ -4,7 +4,7 @@ var pinCount = 8;
 var map = document.querySelector('.map');
 var mainPinButton = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
-var formAndFilterFields = document.querySelectorAll('.map__features, select, fieldset');
+var filterAndNoticeFields = document.querySelectorAll('.map__features, select, fieldset');
 var MAIN_PIN_WIDTH = 65;
 var MAIN_PIN_HEIGHT = 65;
 var MAIN_PIN_HEIGHT_ACTIVE = 85;
@@ -13,7 +13,7 @@ var LEFT_MOUSE_BUTTON = 0;
 var ENTER_KEY = 'Enter';
 
 var disableFields = function (value) {
-  formAndFilterFields.forEach(function (item) {
+  filterAndNoticeFields.forEach(function (item) {
     item.disabled = value;
   });
 };
