@@ -27,18 +27,6 @@
     capacitySelect.setCustomValidity(ROOM_CAPACITY[roomNumber].includes(capacityNumber) ? '' : 'Количество гостей больше чем комнат');
   };
 
-  titleFormOffer.addEventListener('invalid', function () {
-    if (titleFormOffer.validity.tooShort) {
-      titleFormOffer.setCustomValidity('Заголовок должен состоять минимум из 30 символов');
-    } else if (titleFormOffer.validity.tooLong) {
-      titleFormOffer.setCustomValidity('Заголовок не должен превышать 100 символов');
-    } else if (titleFormOffer.validity.valueMissing) {
-      titleFormOffer.setCustomValidity('Обязательное поле');
-    } else {
-      titleFormOffer.setCustomValidity('');
-    }
-  });
-
   var onPriceChange = function (evt) {
     var value = evt.target.value;
     switch (value) {
@@ -60,18 +48,6 @@
         break;
     }
   };
-
-  priceFormOffer.addEventListener('invalid', function () {
-    if (priceFormOffer.validity.rangeUnderflow) {
-      priceFormOffer.setCustomValidity('Жилье не может стоить меньше 1000 рублей');
-    } else if (priceFormOffer.validity.rangeOverflow) {
-      priceFormOffer.setCustomValidity('Жилье не может стоить больше 1 000 000 рублей');
-    } else if (priceFormOffer.validity.valueMissing) {
-      priceFormOffer.setCustomValidity('Обязательное поле');
-    } else {
-      priceFormOffer.setCustomValidity('');
-    }
-  });
 
   var onTimeChange = function (sourceElement, targetElement) {
     if (sourceElement.value !== targetElement.value) {
@@ -111,6 +87,30 @@
   };
 
   validateRoomsAndGuests();
+
+  titleFormOffer.addEventListener('invalid', function () {
+    if (titleFormOffer.validity.tooShort) {
+      titleFormOffer.setCustomValidity('Заголовок должен состоять минимум из 30 символов');
+    } else if (titleFormOffer.validity.tooLong) {
+      titleFormOffer.setCustomValidity('Заголовок не должен превышать 100 символов');
+    } else if (titleFormOffer.validity.valueMissing) {
+      titleFormOffer.setCustomValidity('Обязательное поле');
+    } else {
+      titleFormOffer.setCustomValidity('');
+    }
+  });
+
+  priceFormOffer.addEventListener('invalid', function () {
+    if (priceFormOffer.validity.rangeUnderflow) {
+      priceFormOffer.setCustomValidity('Жилье не может стоить меньше 1000 рублей');
+    } else if (priceFormOffer.validity.rangeOverflow) {
+      priceFormOffer.setCustomValidity('Жилье не может стоить больше 1 000 000 рублей');
+    } else if (priceFormOffer.validity.valueMissing) {
+      priceFormOffer.setCustomValidity('Обязательное поле');
+    } else {
+      priceFormOffer.setCustomValidity('');
+    }
+  });
 
   roomNumberSelect.addEventListener('change', function () {
     validateRoomsAndGuests();

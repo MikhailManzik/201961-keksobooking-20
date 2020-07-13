@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Михаил Манзик](https://up.htmlacademy.ru/javascript/20/user/201961).
-* Наставник: [Максим Прусаков](https://htmlacademy.ru/profile/hikikomori).
+* Наставник: [Елена Грицук](https://htmlacademy.ru/profile/id199079).
 
 ---
 
