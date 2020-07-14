@@ -1,4 +1,4 @@
 'use strict';
 
 window.page.disableFields(true);
-window.page.getAddressOfMainPin(false);
+window.pin.getAddressOfMainPin(false);

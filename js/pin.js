@@ -81,9 +81,9 @@
         y: mainPinButton.offsetTop - shift.y,
       };
 
-      if ((newPosition.x >= -(MAIN_PIN_WIDTH / 2)) && newPosition.x <= mapPins.offsetWidth - (MAIN_PIN_WIDTH / 2)) {
+      if (newPosition.x >= -Math.round(MAIN_PIN_WIDTH / 2) && newPosition.x <= mapPins.offsetWidth - MAIN_PIN_WIDTH / 2) {
         mainPinButton.style.left = newPosition.x + 'px';
-      } if ((newPosition.y >= MOVEMENT_ZONE_Y_TOP) && (newPosition.y <= MOVEMENT_ZONE_Y_BOTTOM)) {
+      } if (newPosition.y >= MOVEMENT_ZONE_Y_TOP - Math.round(MAIN_PIN_HEIGHT / 2) && newPosition.y <= MOVEMENT_ZONE_Y_BOTTOM - MAIN_PIN_HEIGHT / 2) {
         mainPinButton.style.top = newPosition.y + 'px';
       }
 
