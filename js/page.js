@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var pinCount = 8;
   var map = document.querySelector('.map');
   var mainPinButton = document.querySelector('.map__pin--main');
   var adForm = document.querySelector('.ad-form');
@@ -19,7 +18,7 @@
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     disableFields(false);
-    window.pin.renderPins(window.data.getData(pinCount));
+    window.backend.load(onSuccessLoad);
     window.pin.getAddressOfMainPin(true);
 
     mainPinButton.removeEventListener('mousedown', onMainPinClick);
@@ -38,6 +37,10 @@
       activatePage();
     }
   };
+
+  function onSuccessLoad(data) {
+    window.pin.renderPins(data);
+  }
 
   mainPinButton.addEventListener('mousedown', onMainPinClick);
   mainPinButton.addEventListener('keydown', onMainPinEnterPress);
