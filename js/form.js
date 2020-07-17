@@ -20,6 +20,14 @@
   var imgAvatar = document.querySelector('.ad-form-header__preview img');
   var inputImages = document.querySelector('#images');
   var imgApartament = document.querySelector('.ad-form__photo');
+  var adForm = document.querySelector('.ad-form');
+  var successTemplate = document.querySelector('#success').content;
+  var mainBlock = document.querySelector('main');
+  var errorTemplate = document.querySelector('#error').content;
+  var errorButton = document.querySelector('.error__button');
+  var ESC_KEY_CODE = 'Escape';
+  var resetButton = document.querySelector('.ad-form__reset');
+  var addressInput = document.querySelector('#address');
 
   var validateRoomsAndGuests = function () {
     var roomNumber = roomNumberSelect.value;
@@ -86,6 +94,50 @@
     }
   };
 
+  function showSuccessMessage() {
+    var successMessage = successTemplate.cloneNode(true);
+    mainBlock.appendChild(successMessage);
+
+    document.addEventListener('click', onDocumentClick);
+    document.addEventListener('keydown', onDocumentEscPress);
+
+    window.page.deactivationPage();
+  }
+
+  function showErrorMessage() {
+    var errorMessage = errorTemplate.cloneNode(true);
+    mainBlock.appendChild(errorMessage);
+
+    document.addEventListener('click', onDocumentClick);
+    document.addEventListener('keydown', onDocumentEscPress);
+  }
+
+  var closeMessage = function () {
+    var successMessagePopup = document.querySelector('.success');
+    var errorMessagePopup = document.querySelector('.error');
+
+    if (successMessagePopup) {
+      successMessagePopup.remove();
+    }
+
+    if (errorMessagePopup) {
+      errorMessagePopup.remove();
+    }
+
+    document.removeEventListener('click', onDocumentClick);
+    document.removeEventListener('keydown', onDocumentEscPress);
+  };
+
+  var onDocumentClick = function () {
+    closeMessage();
+  }
+
+  var onDocumentEscPress = function (evt) {
+    if (evt.key === ESC_KEY_CODE || evt.key === errorButton) {
+      closeMessage();
+    }
+  }
+
   validateRoomsAndGuests();
 
   titleFormOffer.addEventListener('invalid', function () {
@@ -131,6 +183,11 @@
   inputImages.addEventListener('change', function () {
     addPicture(inputImages, false, imgApartament);
   });
+
+  adForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.upload(new FormData(adForm), showSuccessMessage, showErrorMessage);
+  })
 
   window.form = {
     validateRoomsAndGuests: validateRoomsAndGuests,

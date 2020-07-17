@@ -23,8 +23,19 @@
 
     mainPinButton.removeEventListener('mousedown', onMainPinClick);
     mainPinButton.removeEventListener('keydown', onMainPinEnterPress);
-
   };
+
+  var deactivationPage = function () {
+    adForm.reset();
+    map.classList.add('map--faded');
+    adForm.classList.add('ad-form--disabled');
+    disableFields(true);
+    window.pin.removePins();
+    window.pin.getAddressOfMainPin(true);
+
+    mainPinButton.addEventListener('mousedown', onMainPinClick);
+    mainPinButton.addEventListener('keydown', onMainPinEnterPress);
+  }
 
   var onMainPinClick = function (evt) {
     if (evt.button === LEFT_MOUSE_BUTTON) {
@@ -47,6 +58,7 @@
 
   window.page = {
     disableFields: disableFields,
+    deactivationPage: deactivationPage,
   };
 
 })();

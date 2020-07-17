@@ -101,9 +101,18 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+
+  var removePins = function () {
+    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pins.forEach(function (pin)  {
+      pin.remove();
+    })
+  };
+
   window.pin = {
     renderPins: renderPins,
     getAddressOfMainPin: getAddressOfMainPin,
+    removePins: removePins,
   };
 
 })();
