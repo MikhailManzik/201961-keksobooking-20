@@ -27,6 +27,7 @@
 
   var deactivationPage = function () {
     adForm.reset();
+    window.card.closePopup();
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
     disableFields(true);
@@ -35,7 +36,7 @@
 
     mainPinButton.addEventListener('mousedown', onMainPinClick);
     mainPinButton.addEventListener('keydown', onMainPinEnterPress);
-  }
+  };
 
   var onMainPinClick = function (evt) {
     if (evt.button === LEFT_MOUSE_BUTTON) {

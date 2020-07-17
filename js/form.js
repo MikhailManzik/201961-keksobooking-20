@@ -27,7 +27,6 @@
   var errorButton = document.querySelector('.error__button');
   var ESC_KEY_CODE = 'Escape';
   var resetButton = document.querySelector('.ad-form__reset');
-  var addressInput = document.querySelector('#address');
 
   var validateRoomsAndGuests = function () {
     var roomNumber = roomNumberSelect.value;
@@ -130,13 +129,13 @@
 
   var onDocumentClick = function () {
     closeMessage();
-  }
+  };
 
   var onDocumentEscPress = function (evt) {
     if (evt.key === ESC_KEY_CODE || evt.key === errorButton) {
       closeMessage();
     }
-  }
+  };
 
   validateRoomsAndGuests();
 
@@ -187,7 +186,12 @@
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.backend.upload(new FormData(adForm), showSuccessMessage, showErrorMessage);
-  })
+  });
+
+  resetButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    window.page.deactivationPage();
+  });
 
   window.form = {
     validateRoomsAndGuests: validateRoomsAndGuests,

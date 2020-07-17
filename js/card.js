@@ -83,6 +83,7 @@
 
   window.card = {
     renderCard: renderCard,
+    closePopup: closePopup,
   };
 
 })();
