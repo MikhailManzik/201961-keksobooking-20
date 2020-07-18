@@ -1,16 +1,22 @@
 'use strict';
 
 (function () {
-  var SERVER_URL = 'https://javascript.pages.academy/keksobooking';
-  var SERVER_URL_DATA = SERVER_URL + '/data';
   var SERVER_TIMEOUT = 10000;
   var code = {
     SUCCESS: 200
   };
 
-  function setup(onSuccess, onError) {
+  function load(url, method, onSuccess, onError, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
+
+    xhr.open(method, url);
+
+    if (data) {
+      xhr.send(data);
+    } else {
+      xhr.send();
+    }
 
     xhr.addEventListener('load', function () {
       if (xhr.status === code.SUCCESS) {
@@ -32,20 +38,7 @@
     return xhr;
   }
 
-  function upload(data, onSuccess, onError) {
-    var xhr = setup(onSuccess, onError);
-    xhr.open('POST', SERVER_URL);
-    xhr.send(data);
-  }
-
-  function load(onSuccess, onError) {
-    var xhr = setup(onSuccess, onError);
-    xhr.open('GET', SERVER_URL_DATA);
-    xhr.send();
-  }
-
   window.backend = {
-    upload: upload,
     load: load
   };
 })();
