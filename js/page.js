@@ -24,7 +24,7 @@
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     disableFields(false);
-    window.backend.load(SERVER_URL_DATA, REQUEST_METHOD_GET, onSuccessLoad, window.popups.showErrorMessage);
+    window.backend.load(SERVER_URL_DATA, REQUEST_METHOD_GET, onSuccessLoad, window.popups.showErrorMessage.bind(null, 'Ошибка загрузки данных с сервера'));
     window.pin.getAddressOfMainPin(true);
 
     mainPinButton.removeEventListener('mousedown', onMainPinClick);

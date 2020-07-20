@@ -4,9 +4,7 @@
   var successTemplate = document.querySelector('#success').content;
   var mainBlock = document.querySelector('main');
   var errorTemplate = document.querySelector('#error').content;
-  var errorButton = document.querySelector('.error__button');
   var ESC_KEY_CODE = 'Escape';
-  var adForm = document.querySelector('.ad-form');
 
   var showSuccessMessage = function () {
     var successMessage = successTemplate.cloneNode(true);
@@ -18,26 +16,28 @@
     window.page.deactivatePage();
   };
 
-  var showErrorMessage = function (error) {
-    var buttonSubmit = adForm.querySelector('.ad-form__submit');
+  var showErrorMessage = function (message) {
+    var errorMessage = errorTemplate.cloneNode(true);
+    var textMessage = errorMessage.querySelector('.error__message');
+    var errorButton = errorMessage.querySelector('.error__button');
 
-    if (buttonSubmit) {
-      var errorMessage = errorTemplate.cloneNode(true);
+    if (message) {
+      textMessage.textContent = message;
+      errorButton.textContent = 'Перезагрузить страницу';
       mainBlock.appendChild(errorMessage);
 
+      var errorBlock = document.querySelector('.error');
+      errorBlock.addEventListener('click', onDocumentClick);
+      document.addEventListener('keydown', onDocumentEscPress);
+
+      errorButton.addEventListener('click', function () {
+        document.location.reload(true);
+      });
+    } else {
+      mainBlock.appendChild(errorMessage);
       document.addEventListener('click', onDocumentClick);
       document.addEventListener('keydown', onDocumentEscPress);
     }
-
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
-
-    node.textContent = error;
-    document.body.insertAdjacentElement('afterbegin', node);
   };
 
   var closeMessage = function () {
@@ -61,7 +61,7 @@
   };
 
   var onDocumentEscPress = function (evt) {
-    if (evt.key === ESC_KEY_CODE || evt.key === errorButton) {
+    if (evt.key === ESC_KEY_CODE) {
       closeMessage();
     }
   };

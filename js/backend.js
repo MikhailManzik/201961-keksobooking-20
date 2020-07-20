@@ -22,16 +22,16 @@
       if (xhr.status === code.SUCCESS) {
         onSuccess(xhr.response);
       } else {
-        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        onError();
       }
     });
 
     xhr.addEventListener('error', function () {
-      onError('Ошибка соединения');
+      onError();
     });
 
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError();
     });
 
     xhr.timeout = SERVER_TIMEOUT;
