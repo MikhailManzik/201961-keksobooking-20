@@ -68,7 +68,9 @@
   var closePopup = function () {
     var popup = document.querySelector('.popup');
     var pin = mapPins.querySelector('.map__pin--active');
-    pin.classList.remove('map__pin--active');
+    if (pin) {
+      pin.classList.remove('map__pin--active');
+    }
     if (popup) {
       popup.remove();
     }
@@ -83,6 +85,7 @@
 
   window.card = {
     renderCard: renderCard,
+    closePopup: closePopup,
   };
 
 })();

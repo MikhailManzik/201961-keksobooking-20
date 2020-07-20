@@ -20,6 +20,10 @@
   var imgAvatar = document.querySelector('.ad-form-header__preview img');
   var inputImages = document.querySelector('#images');
   var imgApartament = document.querySelector('.ad-form__photo');
+  var adForm = document.querySelector('.ad-form');
+  var resetButton = document.querySelector('.ad-form__reset');
+  var SERVER_URL = 'https://javascript.pages.academy/keksobooking';
+  var REQUEST_METHOD_POST = 'POST';
 
   var validateRoomsAndGuests = function () {
     var roomNumber = roomNumberSelect.value;
@@ -86,6 +90,13 @@
     }
   };
 
+  function removePicture(imgBlock) {
+    var images = imgBlock.querySelectorAll('img');
+    images.forEach(function (img) {
+      img.remove();
+    });
+  }
+
   validateRoomsAndGuests();
 
   titleFormOffer.addEventListener('invalid', function () {
@@ -132,8 +143,19 @@
     addPicture(inputImages, false, imgApartament);
   });
 
+  adForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.load(SERVER_URL, REQUEST_METHOD_POST, window.popups.showSuccessMessage, window.popups.showErrorMessage, new FormData(adForm));
+  });
+
+  resetButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    window.page.deactivatePage();
+  });
+
   window.form = {
     validateRoomsAndGuests: validateRoomsAndGuests,
+    removePicture: removePicture,
   };
 
 })();

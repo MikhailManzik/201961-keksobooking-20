@@ -13,6 +13,10 @@
   var addressInput = document.querySelector('#address');
   var MOVEMENT_ZONE_Y_TOP = 130;
   var MOVEMENT_ZONE_Y_BOTTOM = 630;
+  var defaultPositionMainPin = {
+    x: mainPinButton.offsetLeft,
+    y: mainPinButton.offsetTop
+  };
 
   var renderPin = function (offer) {
     var pin = mapPin.cloneNode(true);
@@ -101,9 +105,24 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+
+  var removePins = function () {
+    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pins.forEach(function (pin) {
+      pin.remove();
+    });
+  };
+
+  function resetPositionPin() {
+    mainPinButton.style = 'left:' + defaultPositionMainPin.x + 'px;' + 'top:' + defaultPositionMainPin.y + 'px';
+    getAddressOfMainPin(false);
+  }
+
   window.pin = {
     renderPins: renderPins,
     getAddressOfMainPin: getAddressOfMainPin,
+    removePins: removePins,
+    resetPositionPin: resetPositionPin,
   };
 
 })();
