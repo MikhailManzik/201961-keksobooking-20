@@ -24,7 +24,7 @@
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     disableFields(false);
-    window.backend.load(SERVER_URL_DATA, REQUEST_METHOD_GET, onSuccessLoad, window.popups.showErrorMessage.bind(null, 'Ошибка загрузки данных с сервера'));
+    window.backend.load(SERVER_URL_DATA, REQUEST_METHOD_GET, window.filter.onSuccessLoad, window.popups.showErrorMessage.bind(null, 'Ошибка загрузки данных с сервера'));
     window.pin.getAddressOfMainPin(true);
 
     mainPinButton.removeEventListener('mousedown', onMainPinClick);
@@ -63,10 +63,6 @@
       activatePage();
     }
   };
-
-  function onSuccessLoad(data) {
-    window.pin.renderPins(data);
-  }
 
   mainPinButton.addEventListener('mousedown', onMainPinClick);
   mainPinButton.addEventListener('keydown', onMainPinEnterPress);

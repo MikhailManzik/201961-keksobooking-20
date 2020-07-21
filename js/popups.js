@@ -19,20 +19,14 @@
   var showErrorMessage = function (message) {
     var errorMessage = errorTemplate.cloneNode(true);
     var textMessage = errorMessage.querySelector('.error__message');
-    var errorButton = errorMessage.querySelector('.error__button');
 
     if (message) {
       textMessage.textContent = message;
-      errorButton.textContent = 'Перезагрузить страницу';
       mainBlock.appendChild(errorMessage);
-
       var errorBlock = document.querySelector('.error');
       errorBlock.addEventListener('click', onDocumentClick);
       document.addEventListener('keydown', onDocumentEscPress);
 
-      errorButton.addEventListener('click', function () {
-        document.location.reload(true);
-      });
     } else {
       mainBlock.appendChild(errorMessage);
       document.addEventListener('click', onDocumentClick);

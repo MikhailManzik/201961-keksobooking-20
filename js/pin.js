@@ -17,6 +17,7 @@
     x: mainPinButton.offsetLeft,
     y: mainPinButton.offsetTop
   };
+  var NUMBER_OF_PINS = 5;
 
   var renderPin = function (offer) {
     var pin = mapPin.cloneNode(true);
@@ -25,7 +26,6 @@
     pin.style.top = offer.location.y - PIN_HEIGHT + 'px';
     pinImage.src = offer.author.avatar;
     pinImage.alt = offer.offer.title;
-
     pin.addEventListener('click', function () {
       var popup = document.querySelector('.popup');
       var currentPin = document.querySelector('.map__pin--active');
@@ -45,9 +45,9 @@
   var renderPins = function (offers) {
     var fragment = document.createDocumentFragment();
 
-    offers.forEach(function (offer) {
-      fragment.appendChild(renderPin(offer));
-    });
+    for (var a = 0; a < NUMBER_OF_PINS; a++) {
+      fragment.appendChild(renderPin(offers[a]));
+    }
 
     mapPins.appendChild(fragment);
   };
