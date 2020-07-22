@@ -17,7 +17,6 @@
     x: mainPinButton.offsetLeft,
     y: mainPinButton.offsetTop
   };
-  var NUMBER_OF_PINS = 5;
 
   var renderPin = function (offer) {
     var pin = mapPin.cloneNode(true);
@@ -44,8 +43,13 @@
 
   var renderPins = function (offers) {
     var fragment = document.createDocumentFragment();
+    var numberOfPins = 5;
 
-    for (var a = 0; a < NUMBER_OF_PINS; a++) {
+    if (offers.length < numberOfPins) {
+      numberOfPins = offers.length;
+    }
+
+    for (var a = 0; a < numberOfPins; a++) {
       fragment.appendChild(renderPin(offers[a]));
     }
 
