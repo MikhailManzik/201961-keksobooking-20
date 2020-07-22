@@ -44,10 +44,7 @@
   var renderPins = function (offers) {
     var fragment = document.createDocumentFragment();
     var numberOfPins = 5;
-
-    if (offers.length < numberOfPins) {
-      numberOfPins = offers.length;
-    }
+    numberOfPins = offers.length < numberOfPins ? offers.length : numberOfPins;
 
     for (var a = 0; a < numberOfPins; a++) {
       fragment.appendChild(renderPin(offers[a]));
@@ -122,11 +119,17 @@
     getAddressOfMainPin(false);
   }
 
+  var onSuccessLoad = function (data) {
+    window.pin.arrayPins = data;
+    window.pin.renderPins(window.pin.arrayPins);
+  };
+
   window.pin = {
     renderPins: renderPins,
     getAddressOfMainPin: getAddressOfMainPin,
     removePins: removePins,
     resetPositionPin: resetPositionPin,
+    onSuccessLoad: onSuccessLoad,
   };
 
 })();
