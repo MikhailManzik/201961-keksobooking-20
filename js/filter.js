@@ -7,12 +7,12 @@
   var housingRooms = document.querySelector('#housing-rooms');
   var housingGuests = document.querySelector('#housing-guests');
   var mapFilters = document.querySelector('.map__filters');
-  var PRICE_TYPE = {
+  var PriceType = {
     MIDDLE: 'middle',
     LOW: 'low',
     HIGH: 'high'
   };
-  var PRICE_VALUE = {
+  var PriceValue = {
     MIN: 10000,
     MAX: 50000
   };
@@ -23,12 +23,12 @@
 
   var filterHousingPrice = function (selectedValue, pinValue) {
     switch (selectedValue) {
-      case PRICE_TYPE.MIDDLE:
-        return pinValue >= PRICE_VALUE.MIN && pinValue <= PRICE_VALUE.MAX;
-      case PRICE_TYPE.LOW:
-        return pinValue <= PRICE_VALUE.MIN;
-      case PRICE_TYPE.HIGH:
-        return pinValue >= PRICE_VALUE.MAX;
+      case PriceType.MIDDLE:
+        return pinValue >= PriceValue.MIN && pinValue <= PriceValue.MAX;
+      case PriceType.LOW:
+        return pinValue <= PriceValue.MIN;
+      case PriceType.HIGH:
+        return pinValue >= PriceValue.MAX;
       default:
         return true;
     }

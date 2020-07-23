@@ -13,10 +13,11 @@
   var addressInput = document.querySelector('#address');
   var MOVEMENT_ZONE_Y_TOP = 130;
   var MOVEMENT_ZONE_Y_BOTTOM = 630;
-  var defaultPositionMainPin = {
-    x: mainPinButton.offsetLeft,
-    y: mainPinButton.offsetTop
+  var DefaultPositionMainPin = {
+    X: mainPinButton.offsetLeft,
+    Y: mainPinButton.offsetTop
   };
+  var MAX_OFFERS_NUMBER = 5;
 
   var renderPin = function (offer) {
     var pin = mapPin.cloneNode(true);
@@ -43,8 +44,7 @@
 
   var renderPins = function (offers) {
     var fragment = document.createDocumentFragment();
-    var numberOfPins = 5;
-    numberOfPins = offers.length < numberOfPins ? offers.length : numberOfPins;
+    var numberOfPins = offers.length < MAX_OFFERS_NUMBER ? offers.length : MAX_OFFERS_NUMBER;
 
     for (var a = 0; a < numberOfPins; a++) {
       fragment.appendChild(renderPin(offers[a]));
@@ -114,10 +114,10 @@
     });
   };
 
-  function resetPositionPin() {
-    mainPinButton.style = 'left:' + defaultPositionMainPin.x + 'px;' + 'top:' + defaultPositionMainPin.y + 'px';
+  var resetPositionPin = function () {
+    mainPinButton.style = 'left:' + DefaultPositionMainPin.X + 'px;' + 'top:' + DefaultPositionMainPin.Y + 'px';
     getAddressOfMainPin(false);
-  }
+  };
 
   var onSuccessLoad = function (data) {
     window.pin.arrayPins = data;

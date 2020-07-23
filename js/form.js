@@ -3,7 +3,7 @@
 (function () {
   var roomNumberSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
-  var ROOM_CAPACITY = {
+  var RoomCapacity = {
     1: [1],
     2: [1, 2],
     3: [1, 2, 3],
@@ -15,7 +15,7 @@
   var typeFormHousingOffer = document.querySelector('#type');
   var timeInFormOffer = document.querySelector('#timein');
   var timeOutFormOffer = document.querySelector('#timeout');
-  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var fileTypes = ['gif', 'jpg', 'jpeg', 'png'];
   var inputAvatar = document.querySelector('#avatar');
   var imgAvatar = document.querySelector('.ad-form-header__preview img');
   var inputImages = document.querySelector('#images');
@@ -28,7 +28,7 @@
   var validateRoomsAndGuests = function () {
     var roomNumber = roomNumberSelect.value;
     var capacityNumber = parseInt(capacitySelect.value, SYSTEM_OF_NUMERATION);
-    capacitySelect.setCustomValidity(ROOM_CAPACITY[roomNumber].includes(capacityNumber) ? '' : 'Количество гостей больше чем комнат');
+    capacitySelect.setCustomValidity(RoomCapacity[roomNumber].includes(capacityNumber) ? '' : 'Количество гостей больше чем комнат');
   };
 
   var onPriceChange = function (evt) {
@@ -64,7 +64,7 @@
 
     if (file) {
       var fileName = file.name.toLowerCase();
-      var matches = FILE_TYPES.some(function (it) {
+      var matches = fileTypes.some(function (it) {
         return fileName.endsWith(it);
       });
     }
@@ -90,12 +90,12 @@
     }
   };
 
-  function removePicture(imgBlock) {
+  var removePicture = function (imgBlock) {
     var images = imgBlock.querySelectorAll('img');
     images.forEach(function (img) {
       img.remove();
     });
-  }
+  };
 
   validateRoomsAndGuests();
 
