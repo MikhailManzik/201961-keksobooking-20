@@ -9,7 +9,7 @@
     3: [1, 2, 3],
     100: [0]
   };
-  var SYSTEM_OF_NUMERATION = 10;
+  var RADIX = 10;
   var titleFormOffer = document.querySelector('#title');
   var priceFormOffer = document.querySelector('#price');
   var typeFormHousingOffer = document.querySelector('#type');
@@ -27,7 +27,7 @@
 
   var validateRoomsAndGuests = function () {
     var roomNumber = roomNumberSelect.value;
-    var capacityNumber = parseInt(capacitySelect.value, SYSTEM_OF_NUMERATION);
+    var capacityNumber = parseInt(capacitySelect.value, RADIX);
     capacitySelect.setCustomValidity(RoomCapacity[roomNumber].includes(capacityNumber) ? '' : 'Количество гостей больше чем комнат');
   };
 

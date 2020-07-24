@@ -4,7 +4,6 @@
   var successTemplate = document.querySelector('#success').content;
   var mainBlock = document.querySelector('main');
   var errorTemplate = document.querySelector('#error').content;
-  var ESC_KEY_CODE = 'Escape';
 
   var showSuccessMessage = function () {
     var successMessage = successTemplate.cloneNode(true);
@@ -55,7 +54,7 @@
   };
 
   var onDocumentEscPress = function (evt) {
-    if (evt.key === ESC_KEY_CODE) {
+    if (evt.key === window.constants.escKey) {
       closeMessage();
     }
   };
