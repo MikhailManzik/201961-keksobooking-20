@@ -111,12 +111,12 @@
     }
   });
 
-  priceFormOffer.addEventListener('invalid', function () {
-    if (priceFormOffer.validity.rangeUnderflow) {
-      priceFormOffer.setCustomValidity('Жилье не может стоить меньше 1000 рублей');
-    } else if (priceFormOffer.validity.rangeOverflow) {
+  priceFormOffer.addEventListener('invalid', function (evt) {
+    if (evt.target.validity.rangeUnderflow) {
+      priceFormOffer.setCustomValidity('Жилье не может стоить меньше ' + evt.target.min + ' рублей');
+    } else if (evt.target.validity.rangeOverflow) {
       priceFormOffer.setCustomValidity('Жилье не может стоить больше 1 000 000 рублей');
-    } else if (priceFormOffer.validity.valueMissing) {
+    } else if (evt.target.validity.valueMissing) {
       priceFormOffer.setCustomValidity('Обязательное поле');
     } else {
       priceFormOffer.setCustomValidity('');

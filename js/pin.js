@@ -47,7 +47,9 @@
     var numberOfPins = offers.length < MAX_OFFERS_NUMBER ? offers.length : MAX_OFFERS_NUMBER;
 
     for (var a = 0; a < numberOfPins; a++) {
-      fragment.appendChild(renderPin(offers[a]));
+      if (offers[a].hasOwnProperty('offer')) {
+        fragment.appendChild(renderPin(offers[a]));
+      }
     }
 
     mapPins.appendChild(fragment);
