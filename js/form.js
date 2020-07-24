@@ -3,19 +3,19 @@
 (function () {
   var roomNumberSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
-  var ROOM_CAPACITY = {
+  var RoomCapacity = {
     1: [1],
     2: [1, 2],
     3: [1, 2, 3],
     100: [0]
   };
-  var SYSTEM_OF_NUMERATION = 10;
+  var RADIX = 10;
   var titleFormOffer = document.querySelector('#title');
   var priceFormOffer = document.querySelector('#price');
   var typeFormHousingOffer = document.querySelector('#type');
   var timeInFormOffer = document.querySelector('#timein');
   var timeOutFormOffer = document.querySelector('#timeout');
-  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var fileTypes = ['gif', 'jpg', 'jpeg', 'png'];
   var inputAvatar = document.querySelector('#avatar');
   var imgAvatar = document.querySelector('.ad-form-header__preview img');
   var inputImages = document.querySelector('#images');
@@ -27,8 +27,8 @@
 
   var validateRoomsAndGuests = function () {
     var roomNumber = roomNumberSelect.value;
-    var capacityNumber = parseInt(capacitySelect.value, SYSTEM_OF_NUMERATION);
-    capacitySelect.setCustomValidity(ROOM_CAPACITY[roomNumber].includes(capacityNumber) ? '' : 'Количество гостей больше чем комнат');
+    var capacityNumber = parseInt(capacitySelect.value, RADIX);
+    capacitySelect.setCustomValidity(RoomCapacity[roomNumber].includes(capacityNumber) ? '' : 'Количество гостей больше чем комнат');
   };
 
   var onPriceChange = function (evt) {
@@ -64,7 +64,7 @@
 
     if (file) {
       var fileName = file.name.toLowerCase();
-      var matches = FILE_TYPES.some(function (it) {
+      var matches = fileTypes.some(function (it) {
         return fileName.endsWith(it);
       });
     }
@@ -90,12 +90,12 @@
     }
   };
 
-  function removePicture(imgBlock) {
+  var removePicture = function (imgBlock) {
     var images = imgBlock.querySelectorAll('img');
     images.forEach(function (img) {
       img.remove();
     });
-  }
+  };
 
   validateRoomsAndGuests();
 
@@ -111,12 +111,12 @@
     }
   });
 
-  priceFormOffer.addEventListener('invalid', function () {
-    if (priceFormOffer.validity.rangeUnderflow) {
-      priceFormOffer.setCustomValidity('Жилье не может стоить меньше 1000 рублей');
-    } else if (priceFormOffer.validity.rangeOverflow) {
+  priceFormOffer.addEventListener('invalid', function (evt) {
+    if (evt.target.validity.rangeUnderflow) {
+      priceFormOffer.setCustomValidity('Жилье не может стоить меньше ' + evt.target.min + ' рублей');
+    } else if (evt.target.validity.rangeOverflow) {
       priceFormOffer.setCustomValidity('Жилье не может стоить больше 1 000 000 рублей');
-    } else if (priceFormOffer.validity.valueMissing) {
+    } else if (evt.target.validity.valueMissing) {
       priceFormOffer.setCustomValidity('Обязательное поле');
     } else {
       priceFormOffer.setCustomValidity('');

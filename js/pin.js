@@ -13,10 +13,11 @@
   var addressInput = document.querySelector('#address');
   var MOVEMENT_ZONE_Y_TOP = 130;
   var MOVEMENT_ZONE_Y_BOTTOM = 630;
-  var defaultPositionMainPin = {
-    x: mainPinButton.offsetLeft,
-    y: mainPinButton.offsetTop
+  var DefaultPositionMainPin = {
+    X: mainPinButton.offsetLeft,
+    Y: mainPinButton.offsetTop
   };
+  var MAX_OFFERS_NUMBER = 5;
 
   var renderPin = function (offer) {
     var pin = mapPin.cloneNode(true);
@@ -25,7 +26,6 @@
     pin.style.top = offer.location.y - PIN_HEIGHT + 'px';
     pinImage.src = offer.author.avatar;
     pinImage.alt = offer.offer.title;
-
     pin.addEventListener('click', function () {
       var popup = document.querySelector('.popup');
       var currentPin = document.querySelector('.map__pin--active');
@@ -44,10 +44,13 @@
 
   var renderPins = function (offers) {
     var fragment = document.createDocumentFragment();
+    var numberOfPins = offers.length < MAX_OFFERS_NUMBER ? offers.length : MAX_OFFERS_NUMBER;
 
-    offers.forEach(function (offer) {
-      fragment.appendChild(renderPin(offer));
-    });
+    for (var a = 0; a < numberOfPins; a++) {
+      if (offers[a].hasOwnProperty('offer')) {
+        fragment.appendChild(renderPin(offers[a]));
+      }
+    }
 
     mapPins.appendChild(fragment);
   };
@@ -113,16 +116,22 @@
     });
   };
 
-  function resetPositionPin() {
-    mainPinButton.style = 'left:' + defaultPositionMainPin.x + 'px;' + 'top:' + defaultPositionMainPin.y + 'px';
+  var resetPositionPin = function () {
+    mainPinButton.style = 'left:' + DefaultPositionMainPin.X + 'px;' + 'top:' + DefaultPositionMainPin.Y + 'px';
     getAddressOfMainPin(false);
-  }
+  };
+
+  var onSuccessLoad = function (data) {
+    window.pin.arrayPins = data;
+    window.pin.renderPins(window.pin.arrayPins);
+  };
 
   window.pin = {
     renderPins: renderPins,
     getAddressOfMainPin: getAddressOfMainPin,
     removePins: removePins,
     resetPositionPin: resetPositionPin,
+    onSuccessLoad: onSuccessLoad,
   };
 
 })();

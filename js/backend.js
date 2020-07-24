@@ -2,11 +2,11 @@
 
 (function () {
   var SERVER_TIMEOUT = 10000;
-  var code = {
+  var Code = {
     SUCCESS: 200
   };
 
-  function load(url, method, onSuccess, onError, data) {
+  var load = function (url, method, onSuccess, onError, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -19,7 +19,7 @@
     }
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === code.SUCCESS) {
+      if (xhr.status === Code.SUCCESS) {
         onSuccess(xhr.response);
       } else {
         onError();
@@ -36,7 +36,7 @@
 
     xhr.timeout = SERVER_TIMEOUT;
     return xhr;
-  }
+  };
 
   window.backend = {
     load: load
