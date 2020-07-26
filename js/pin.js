@@ -35,7 +35,7 @@
       } if (popup) {
         popup.remove();
       }
-      window.card.renderCard(offer);
+      window.card.render(offer);
       pin.classList.add('map__pin--active');
     });
 
@@ -123,14 +123,14 @@
 
   var onSuccessLoad = function (data) {
     window.pin.arrayPins = data;
-    window.pin.renderPins(window.pin.arrayPins);
+    window.pin.render(window.pin.arrayPins);
   };
 
   window.pin = {
-    renderPins: renderPins,
-    getAddressOfMainPin: getAddressOfMainPin,
-    removePins: removePins,
-    resetPositionPin: resetPositionPin,
+    render: renderPins,
+    address: getAddressOfMainPin,
+    remove: removePins,
+    reset: resetPositionPin,
     onSuccessLoad: onSuccessLoad,
   };
 

@@ -6,7 +6,6 @@
   var housingPrice = document.querySelector('#housing-price');
   var housingRooms = document.querySelector('#housing-rooms');
   var housingGuests = document.querySelector('#housing-guests');
-  var mapFilters = document.querySelector('.map__filters');
   var PriceType = {
     MIDDLE: 'middle',
     LOW: 'low',
@@ -35,7 +34,7 @@
   };
 
   var filterHousingFeatures = function (item) {
-    var featuresItems = mapFilters.querySelectorAll('.map__checkbox:checked');
+    var featuresItems = formFilters.querySelectorAll('.map__checkbox:checked');
     return Array.from(featuresItems).every(function (element) {
       return item.offer.features.includes(element.value);
     });
@@ -43,7 +42,7 @@
 
   var updatePins = function () {
     window.card.closePopup();
-    window.pin.removePins();
+    window.pin.remove();
 
     var filteredDataArray = window.pin.arrayPins.filter(function (pin) {
       return filterFields(housingType.value, pin.offer.type)
@@ -53,7 +52,7 @@
       && filterHousingFeatures(pin);
     });
 
-    window.pin.renderPins(filteredDataArray);
+    window.pin.render(filteredDataArray);
   };
 
   var onHousingFilter = window.debounce(function () {
@@ -61,5 +60,9 @@
   });
 
   formFilters.addEventListener('change', onHousingFilter);
+
+  window.filter = {
+    filters: formFilters,
+  };
 
 })();

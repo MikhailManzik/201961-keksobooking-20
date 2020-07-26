@@ -99,7 +99,7 @@
 
   validateRoomsAndGuests();
 
-  titleFormOffer.addEventListener('invalid', function () {
+  titleFormOffer.addEventListener('input', function () {
     if (titleFormOffer.validity.tooShort) {
       titleFormOffer.setCustomValidity('Заголовок должен состоять минимум из 30 символов');
     } else if (titleFormOffer.validity.tooLong) {
@@ -111,7 +111,7 @@
     }
   });
 
-  priceFormOffer.addEventListener('invalid', function (evt) {
+  priceFormOffer.addEventListener('input', function (evt) {
     if (evt.target.validity.rangeUnderflow) {
       priceFormOffer.setCustomValidity('Жилье не может стоить меньше ' + evt.target.min + ' рублей');
     } else if (evt.target.validity.rangeOverflow) {

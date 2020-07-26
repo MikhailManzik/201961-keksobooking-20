@@ -100,7 +100,8 @@
   };
 
   window.card = {
-    renderCard: renderCard,
+    mainMap: map,
+    render: renderCard,
     closePopup: closePopup,
   };
 
