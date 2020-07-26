@@ -21,16 +21,11 @@
 
     if (message) {
       textMessage.textContent = message;
-      mainBlock.appendChild(errorMessage);
-      var errorBlock = document.querySelector('.error');
-      errorBlock.addEventListener('click', onDocumentClick);
-      document.addEventListener('keydown', onDocumentEscPress);
-
-    } else {
-      mainBlock.appendChild(errorMessage);
-      document.addEventListener('click', onDocumentClick);
-      document.addEventListener('keydown', onDocumentEscPress);
     }
+    mainBlock.appendChild(errorMessage);
+    var errorBlock = document.querySelector('.error');
+    errorBlock.addEventListener('click', onDocumentClick);
+    document.addEventListener('keydown', onDocumentEscPress);
   };
 
   var closeMessage = function () {

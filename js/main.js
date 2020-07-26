@@ -3,6 +3,6 @@
 (function () {
 
   window.page.disableFields(true);
-  window.pin.getAddressOfMainPin(false);
+  window.pin.address(false);
 
 })();
