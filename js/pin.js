@@ -132,6 +132,7 @@
     remove: removePins,
     reset: resetPositionPin,
     onSuccessLoad: onSuccessLoad,
+    pins: mapPins,
   };
 
 })();

@@ -2,7 +2,6 @@
 
 (function () {
   var map = document.querySelector('.map');
-  var mapPins = document.querySelector('.map__pins');
   var cardTemplate = document.querySelector('#card').content;
   var mapCard = cardTemplate.querySelector('.map__card');
   var mapFilter = document.querySelector('.map__filters-container');
@@ -83,7 +82,7 @@
 
   var closePopup = function () {
     var popup = document.querySelector('.popup');
-    var pin = mapPins.querySelector('.map__pin--active');
+    var pin = window.pin.pins.querySelector('.map__pin--active');
     if (pin) {
       pin.classList.remove('map__pin--active');
     }
